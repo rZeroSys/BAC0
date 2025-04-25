@@ -21,8 +21,6 @@ from BAC0.core.devices.local.factory import (
 )
 from BAC0.scripts.script_runner import run
 
-# set log level
-BAC0.log_level(log_file=logging.DEBUG, stdout=logging.INFO, stderr=logging.CRITICAL)
 bacnet = None
 
 def add_points(device):
@@ -50,7 +48,8 @@ def add_points(device):
 
 
 async def main():
-    # set to debug
+    # set to debug for logs
+    BAC0.log_level(log_file=logging.DEBUG, stdout=logging.INFO, stderr=logging.CRITICAL)
 
     # We'll use 3 devices plus our main instance
     async with BAC0.start(port=47808, ip=args.ip, localObjName="bacnet") as bacnet:
