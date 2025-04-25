@@ -48,3 +48,5 @@ samples/johnhensen.py
 samples/bartinglmqtt.py
 samples/bartling2.py
 samples/ferkelcode.py
+.DS_Store
+.python-version

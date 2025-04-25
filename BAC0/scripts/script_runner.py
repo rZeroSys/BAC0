@@ -2,7 +2,7 @@ import asyncio
 from signal import SIGINT, SIGTERM, signal
 
 
-def run(main_task, bacnet):
+def run(main_task, bacnet, args=None):
     global loop
 
     def handler(sig, sig2):
