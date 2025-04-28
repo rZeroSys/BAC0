@@ -52,8 +52,8 @@ async def main():
     BAC0.log_level(log_file=logging.DEBUG, stdout=logging.INFO, stderr=logging.CRITICAL)
 
     # We'll use 3 devices plus our main instance
-    async with BAC0.start(port=47808, ip=args.ip, localObjName="bacnet_pi") as bacnet:
-        async with BAC0.start(port=47809, ip=args.ip, localObjName="DevicePi1", deviceId=3055555) as device_app:
+    async with BAC0.start(port=47808, ip=args.ip, localObjName="bacnet-pi", deviceId=7) as bacnet:
+        async with BAC0.start(port=47809, ip=args.ip, localObjName="DevicePi-1", deviceId=17) as device_app:
             # add points to instantiated bacnet sensor 
             add_points(device_app)
             
