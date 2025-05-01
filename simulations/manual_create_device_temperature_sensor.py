@@ -3,7 +3,7 @@ import random
 import argparse
 import logging
 
-import BAC0
+from BAC0 import connect, device, log_level
 from BAC0.core.devices.local.factory import (
     ObjectFactory,
     analog_input,
@@ -52,28 +52,27 @@ def add_points(device):
 
 async def main():
     # set to debug for logs
-    BAC0.log_level(log_file=logging.DEBUG, stdout=logging.INFO, stderr=logging.CRITICAL)
+    log_level(log_file=logging.DEBUG, stdout=logging.INFO, stderr=logging.CRITICAL)
 
     # We'll use 3 devices plus our main instance
-    async with BAC0.lite(port=47808, ip=args.ip, localObjName="bacnet-pi-device", deviceId='1117') as device1:
+    async with connect(port=47808, ip=args.ip, localObjName="bacnet-pi-device") as bacnet:
             # add points to instantiated bacnet sensor 
-            add_points(device1)
+            add_points(bacnet)
             
             # connect to device using main network
-            #test_device = await BAC0.device(
-            #    f"{device_app.localIPAddr.addrTuple[0]}:47809", device_app.Boid, bacnet, poll=10
+            #device = await device(
+            #    f"{args.ip}:47808", bacnet_device.Boid, bacnet_device, poll=10
             #)
 
-            device1._log.info("CTRL-C to exit")
+            bacnet._log.info("CTRL-C to exit")
 
             while True:
                 # Simulate a small random temperature drift
-                #current_temp = await device1['Lu-T2-ZN'].value
-                #bacnet._log.info(current_temp)
-                #new_temp = round(current_temp + random.uniform(-0.5, 0.5), 1)
+                current_temp = bacnet['Lu-T2-ZN'].presentValue
+                bacnet._log.info(current_temp)
+                new_temp = round(current_temp + random.uniform(-0.5, 0.5), 1)
                 # Write new temperature
-                #await device1['Lu-T2-ZN'].write(new_temp, priority=8)
-
+                bacnet['Lu-T2-ZN'].presentValue = new_temp
                 #device1._log.info(f"Updated RoomTempSensor presentValue to {new_temp} °C")
 
                 # Wait before updating again
