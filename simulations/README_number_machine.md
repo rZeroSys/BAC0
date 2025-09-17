@@ -46,7 +46,7 @@ source venv/bin/activate
 ### 5. Install BAC0 Dependencies
 
 ```bash
-pip install -e .
+pip install .
 ```
 
 This will install all required dependencies including:
@@ -116,7 +116,7 @@ If you encounter import errors, ensure the virtual environment is activated and 
 
 ```bash
 source venv/bin/activate
-pip install -e .
+pip install .
 ```
 
 ## Auto-start on Boot (Optional)
@@ -134,7 +134,8 @@ sudo nano /etc/systemd/system/number-machine.service
 ```ini
 [Unit]
 Description=Number Machine BACnet Simulation
-After=network.target
+After=network-online.target
+Wants=network-online.target
 
 [Service]
 Type=simple
